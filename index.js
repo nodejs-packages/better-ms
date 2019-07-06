@@ -10,7 +10,7 @@ const m = s * 60;
 const h = m * 60;
 const d = h * 24;
 const w = d * 7;
-const mth = d * new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate()
+const mth = d * new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate();
 const y = d * 366; // 365.25;
 
 module.exports = class Duration {
