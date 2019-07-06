@@ -2,7 +2,10 @@
   "name": "better-ms",
   "version": "1.0.0",
   "description": "Tiny millisecond conversion utility",
-  "repository": "bannerbomb/better-ms",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nodejs-packages/better-ms.git"
+  },
   "main": "./index",
   "files": [
     "index.js"
@@ -32,8 +35,5 @@
     "husky": "0.14.3",
     "lint-staged": "5.0.0",
     "mocha": "4.0.1"
-  },
-  "publishConfig": {
-    "registry":"https://npm.pkg.github.com/"
   }
 }
