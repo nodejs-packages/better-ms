@@ -15,7 +15,7 @@ const y = d * 366; // 365.25;
 
 module.exports = class Duration {
 	static humanized(milliseconds, options = {}) {
-		if (typeof milliseconds === 'string') milliseconds = this.getMilliseconds(milliseconds);
+		if (typeof milliseconds === 'string') milliseconds = Duration.getMilliseconds(milliseconds);
 		if (!Number.isFinite(milliseconds)) throw new TypeError('Expected a finite number');
 		if (options.compact) {
 			options.secondsDecimalDigits = 0;
@@ -39,7 +39,7 @@ module.exports = class Duration {
 			if (difference < 500) milliseconds += difference;
 		}
 
-		const parsed = this._parseMilliseconds(milliseconds);
+		const parsed = Duration._parseMilliseconds(milliseconds);
 
 		add(Math.trunc(parsed.days / 365), 'year', 'y');
 		add(parsed.days % 365, 'day', 'd');
@@ -126,8 +126,8 @@ module.exports = class Duration {
 
 	static getMilliseconds(val, options = {}) {
 		const type = typeof val;
-		if (type === 'string' && val.length > 0) return this._parse(val);
-		else if (type === 'number' && isFinite(val)) return options.long ? this._fmtLong(val) : this._fmtShort(val);
+		if (type === 'string' && val.length > 0) return Duration._parse(val);
+		else if (type === 'number' && isFinite(val)) return options.long ? Duration._fmtLong(val) : Duration._fmtShort(val);
 		throw new Error(
 			'val is not a non-empty string or a valid number. val=' +
 			JSON.stringify(val)
@@ -193,10 +193,10 @@ module.exports = class Duration {
 
 	static _fmtLong(ms) {
 		const msAbs = Math.abs(ms);
-		if (msAbs >= d) return this._plural(ms, msAbs, d, 'day');
-		if (msAbs >= h) return this._plural(ms, msAbs, h, 'hour');
-		if (msAbs >= m) return this._plural(ms, msAbs, m, 'minute');
-		if (msAbs >= s) return this._plural(ms, msAbs, s, 'second');
+		if (msAbs >= d) return Duration._plural(ms, msAbs, d, 'day');
+		if (msAbs >= h) return Duration._plural(ms, msAbs, h, 'hour');
+		if (msAbs >= m) return Duration._plural(ms, msAbs, m, 'minute');
+		if (msAbs >= s) return Duration._plural(ms, msAbs, s, 'second');
 		return ms + ' ms';
 	}
 
