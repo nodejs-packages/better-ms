@@ -148,7 +148,7 @@ module.exports = class Duration {
 		const regex = /(-?(?:\d+)?\.?\d+) *(milliseconds?|msecs?|ms|seconds?|secs?|s|minutes?|mins?|m|hours?|hrs?|h|days?|d|weeks?|w|years?|yrs?|y)?/gi;
 		const match = str.match(regex);
 		if (!match) return;
-		const parse_match = match.map((_, _, p) => regex.exec(p));
+		const parse_match = match.map((q, n, p) => regex.exec(p));
 		const parse_arrays = parse_match.map((array) => array.splice(1));
 		parse_arrays.map((v, x, y) => y[x][0] = parseInt(v));
 		let n = 0;
