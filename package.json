@@ -1,12 +1,12 @@
 {
   "name": "better-ms",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Tiny millisecond conversion utility",
+  "main": "./index",
   "repository": {
     "type": "git",
     "url": "https://github.com/nodejs-packages/better-ms.git"
   },
-  "main": "./index",
   "files": [
     "index.js"
   ],
