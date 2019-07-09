@@ -10,12 +10,13 @@ const m = s * 60;
 const h = m * 60;
 const d = h * 24;
 const w = d * 7;
-const mth = d * new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate();
+const month = new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate();
+const mth = d * month;
 const y = d * 366; // 365.25;
 
 module.exports = class Duration {
-	static humanized(milliseconds, options = {}) {
-		if (typeof milliseconds === 'string') milliseconds = Duration.getMilliseconds(milliseconds);
+	static humanize(milliseconds, options = {}) {
+		if (typeof milliseconds === 'string') milliseconds = Duration.ms(milliseconds);
 		if (!Number.isFinite(milliseconds)) throw new TypeError('Expected a finite number');
 		if (options.compact) {
 			options.secondsDecimalDigits = 0;
@@ -42,6 +43,8 @@ module.exports = class Duration {
 		const parsed = Duration._parseMilliseconds(milliseconds);
 
 		add(Math.trunc(parsed.days / 365), 'year', 'y');
+		//add(parsed.days % month, 'month', 'mth');
+		//add(parsed.weeks % 7, 'week', 'w');
 		add(parsed.days % 365, 'day', 'd');
 		add(parsed.hours, 'hour', 'h');
 		add(parsed.minutes, 'minute', 'm');
@@ -100,6 +103,8 @@ module.exports = class Duration {
 		if (typeof milliseconds !== 'number') throw new TypeError('Expected a number');
 		const roundTowardsZero = milliseconds > 0 ? Math.floor : Math.ceil;
 		return {
+			//months: roundTowardsZero(milliseconds / 2678400000),
+			//weeks: roundTowardsZero(milliseconds / 604800000),
 			days: roundTowardsZero(milliseconds / 86400000),
 			hours: roundTowardsZero(milliseconds / 3600000) % 24,
 			minutes: roundTowardsZero(milliseconds / 60000) % 60,
@@ -124,7 +129,7 @@ module.exports = class Duration {
 	 * @api public
 	 */
 
-	static getMilliseconds(val, options = {}) {
+	static ms(val, options = {}) {
 		const type = typeof val;
 		if (type === 'string' && val.length > 0) return Duration._parse(val);
 		else if (type === 'number' && isFinite(val)) return options.long ? Duration._fmtLong(val) : Duration._fmtShort(val);
@@ -145,7 +150,7 @@ module.exports = class Duration {
 	static _parse(str) {
 		str = String(str);
 		if (str.length > 100) return;
-		const regex = /(-?(?:\d+)?\.?\d+) *(milliseconds?|msecs?|ms|seconds?|secs?|s|minutes?|mins?|m|hours?|hrs?|h|days?|d|weeks?|w|years?|yrs?|y)?/gi;
+		const regex = /(-?(?:\d+)?\.?\d+) *(milliseconds?|msecs?|ms|seconds?|secs?|minutes?|mins?|hours?|hrs?|days?|weeks?|months?|mths?|years?|yrs?|[smhdwy])?/gi;
 		const match = str.match(regex);
 		if (!match) return;
 		const parse_match = match.map((q, n, p) => regex.exec(p));
@@ -176,6 +181,8 @@ module.exports = class Duration {
 
 	static _fmtShort(ms) {
 		let msAbs = Math.abs(ms);
+		if (msAbs >= mth) return Math.round(ms / mth) + 'mth';
+		if (msAbs >= w) return Math.round(ms / w) + 'w';
 		if (msAbs >= d) return Math.round(ms / d) + 'd';
 		if (msAbs >= h) return Math.round(ms / h) + 'h';
 		if (msAbs >= m) return Math.round(ms / m) + 'm';
@@ -193,6 +200,8 @@ module.exports = class Duration {
 
 	static _fmtLong(ms) {
 		const msAbs = Math.abs(ms);
+		if (msAbs >= mth) return Duration._plural(ms, msAbs, mth, 'month');
+		if (msAbs >= w) return Duration._plural(ms, msAbs, w, 'week');
 		if (msAbs >= d) return Duration._plural(ms, msAbs, d, 'day');
 		if (msAbs >= h) return Duration._plural(ms, msAbs, h, 'hour');
 		if (msAbs >= m) return Duration._plural(ms, msAbs, m, 'minute');
