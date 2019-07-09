@@ -12,7 +12,7 @@ const d = h * 24;
 const w = d * 7;
 const month = new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate();
 const mth = d * month;
-const y = d * 366; // 365.25;
+const y = d * 365;// 366 // 365.25;
 
 module.exports = class Duration {
 	static humanize(milliseconds, options = {}) {
