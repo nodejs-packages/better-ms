@@ -1,5 +1,5 @@
 'use strict';
-const parseMilliseconds = require('parse-ms');
+const parseMilliseconds = require('./parse-ms');
 
 const pluralize = (word, count) => count === 1 ? word : word + 's';
 
