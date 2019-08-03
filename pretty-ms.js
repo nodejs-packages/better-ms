@@ -25,10 +25,7 @@ module.exports = (milliseconds, options = {}) => {
 		result.push((valueString || value) + postfix);
 	};
 
-	const secondsDecimalDigits =
-		typeof options.secondsDecimalDigits === 'number' ?
-			options.secondsDecimalDigits :
-			1;
+	const secondsDecimalDigits = typeof options.secondsDecimalDigits === 'number' ? options.secondsDecimalDigits : 1;
 
 	if (secondsDecimalDigits < 1) {
 		const difference = 1000 - (milliseconds % 1000);
@@ -44,48 +41,26 @@ module.exports = (milliseconds, options = {}) => {
 	add(parsed.hours, 'hour', 'h');
 	add(parsed.minutes, 'minute', 'm');
 
-	if (
-		options.separateMilliseconds ||
-		options.formatSubMilliseconds ||
-		milliseconds < 1000
-	) {
+	if (options.separateMilliseconds || options.formatSubMilliseconds || milliseconds < 1000) {
 		add(parsed.seconds, 'second', 's');
 		if (options.formatSubMilliseconds) {
 			add(parsed.milliseconds, 'millisecond', 'ms');
 			add(parsed.microseconds, 'microsecond', 'µs');
 			add(parsed.nanoseconds, 'nanosecond', 'ns');
 		} else {
-			const millisecondsAndBelow =
-				parsed.milliseconds +
-				(parsed.microseconds / 1000) +
-				(parsed.nanoseconds / 1e6);
+			const millisecondsAndBelow = parsed.milliseconds + (parsed.microseconds / 1000) + (parsed.nanoseconds / 1e6);
 
-			const millisecondsDecimalDigits =
-				typeof options.millisecondsDecimalDigits === 'number' ?
-					options.millisecondsDecimalDigits :
-					0;
+			const millisecondsDecimalDigits = typeof options.millisecondsDecimalDigits === 'number' ? options.millisecondsDecimalDigits : 0;
 
-			const millisecondsString = millisecondsDecimalDigits ?
-				millisecondsAndBelow.toFixed(millisecondsDecimalDigits) :
-				Math.ceil(millisecondsAndBelow);
+			const millisecondsString = millisecondsDecimalDigits ? millisecondsAndBelow.toFixed(millisecondsDecimalDigits) : Math.ceil(millisecondsAndBelow);
 
-			add(
-				parseFloat(millisecondsString, 10),
-				'millisecond',
-				'ms',
-				millisecondsString
-			);
+			add(parseFloat(millisecondsString, 10), 'millisecond', 'ms', millisecondsString);
 		}
 	} else {
 		const seconds = (milliseconds / 1000) % 60;
-		const secondsDecimalDigits =
-			typeof options.secondsDecimalDigits === 'number' ?
-				options.secondsDecimalDigits :
-				1;
+		const secondsDecimalDigits = typeof options.secondsDecimalDigits === 'number' ? options.secondsDecimalDigits : 1;
 		const secondsFixed = seconds.toFixed(secondsDecimalDigits);
-		const secondsString = options.keepDecimalsOnWholeSeconds ?
-			secondsFixed :
-			secondsFixed.replace(/\.0+$/, '');
+		const secondsString = options.keepDecimalsOnWholeSeconds ? secondsFixed : secondsFixed.replace(/\.0+$/, '');
 		add(parseFloat(secondsString, 10), 'second', 's', secondsString);
 	}
 
