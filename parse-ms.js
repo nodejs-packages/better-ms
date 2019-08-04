@@ -10,8 +10,8 @@ module.exports = (milliseconds) => {
 
 	const roundTowardsZero = milliseconds > 0 ? Math.floor : Math.ceil;
 	return {
-      		years: roundTowardsZero(milliseconds / ((1000 * 60 * 60 * 24 * 7 * weeks_in_month) * 12)), // 31557600000 // 31540000000 // 31536000000
-		months: roundTowardsZero(milliseconds / (1000 * 60 * 60 * 24 * 7 * weeks_in_month)) % 12,//) % 12, //2419200000 // 2628000000
+      		years: roundTowardsZero(milliseconds / ((1000 * 60 * 60 * 24 * days_in_month) * 12)), // 31557600000 // 31540000000 // 31536000000
+		months: roundTowardsZero(milliseconds / (1000 * 60 * 60 * 24 * days_in_month)) % 12,//) % 12, //2419200000 // 2628000000
 		weeks: roundTowardsZero(milliseconds / (1000 * 60 * 60 * 24 * 7)) % Math.ceil(weeks_in_month),
 		days: roundTowardsZero(milliseconds / (1000 * 60 * 60 * 24)-1) % 7,
 		hours: roundTowardsZero(milliseconds / (1000 * 60 * 60)+1) % 24,
