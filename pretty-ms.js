@@ -1,6 +1,10 @@
 'use strict';
 const parseMilliseconds = require('./parse-ms');
 
+const now = new Date();
+const days_in_month = new Date(now.getFullYear(), now.getMonth()+1, 0).getDate(); // was + 1
+const weeks_in_month = days_in_month / 7;
+
 const pluralize = (word, count) => count === 1 ? word : word + 's';
 
 module.exports = (milliseconds, options = {}) => {
@@ -35,11 +39,13 @@ module.exports = (milliseconds, options = {}) => {
 	}
 
 	const parsed = parseMilliseconds(milliseconds);
-
-	add(Math.trunc(parsed.days / 365), 'year', 'y');
-	add(parsed.days % 365, 'day', 'd');
-	add(parsed.hours, 'hour', 'h');
-	add(parsed.minutes, 'minute', 'm');
+  	add(parsed.years, 'year', 'y');
+	//add(Math.trunc(parsed.days / 365), 'year', 'y');
+  	add(parsed.months % 12, 'month', 'mth'); // new
+  	add(parsed.days % weeks_in_month, 'week', 'w');
+	add(parsed.days +1 % 7/*365*/, 'day', 'd'); //parsed.days % 365 // Math.trunc(parsed.days / month)
+	add(parsed.hours-1 % 60, 'hour', 'h');
+	add(parsed.minutes % 60, 'minute', 'm');
 
 	if (options.separateMilliseconds || options.formatSubMilliseconds || milliseconds < 1000) {
 		add(parsed.seconds, 'second', 's');
