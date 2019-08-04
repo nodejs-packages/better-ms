@@ -2,16 +2,27 @@
  * Helpers.
  */
 
+const leapyear = (year) => {
+	if (year % 4 === 0) {
+		if ((year % 100 === 0) && (year % 400 !== 0)) {
+			return 0;
+		} else {
+			return 1;
+		}
+	}
+	return 0;
+}
+
 const now = new Date();
-const ms = 1;
-const s = ms * 1000;
+const s = 1000;
 const m = s * 60;
 const h = m * 60;
 const d = h * 24;
 const w = d * 7;
-const month = new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate();
-const mth = d * month;
-const y = d * 365.25;
+const days_in_month = new Date(now.getFullYear(), now.getMonth()+1, 0).getDate(); // was + 1
+const weeks_in_month = days_in_month / 7;
+const mth = d * days_in_month;
+const y = mth * 12; //.25 // d * 365
 
 /**
  * Parse or format the given `val`.
@@ -51,25 +62,25 @@ function parse(str) {
 	if (str.length > 100) {
 		return;
 	}
-	const match = /^(-?(?:\d+)?\.?\d+) *(milliseconds?|msecs?|ms|seconds?|secs?|s|minutes?|mins?|m|hours?|hrs?|h|days?|d|weeks?|w|years?|yrs?|y)?$/i.exec(str);
+	const regex = /(-?(?:\d+)?\.?\d+) *(milliseconds?|msecs?|ms|seconds?|secs?|minutes?|mins?|hours?|hrs?|days?|weeks?|months?|mths?|years?|yrs?|[smhdwy])?/gi; // /^(-?(?:\d+)?\.?\d+) *(milliseconds?|msecs?|ms|seconds?|secs?|s|minutes?|mins?|m|hours?|hrs?|h|days?|d|weeks?|w|months?|mth|years?|yrs?|y)?$/i.exec(str);
+	const match = str.match(regex);
 	if (!match) {
 		return;
 	}
-
-	const n = parseFloat(match[1]);
-	const type = (match[2] || 'ms').toLowerCase();
-
-	const availableTypes = [
-		{ types: ['years', 'year', 'yrs', 'yr', 'y'], logic: n * y },
-		{ types: ['weeks', 'week', 'w'], logic: n * w },
-		{ types: ['days', 'day', 'd'], logic: n * d },
-		{ types: ['hours', 'hour', 'hrs', 'hr', 'h'], logic: n * h },
-		{ types: ['minutes', 'minute', 'mins', 'min', 'm'], logic: n * m },
-		{ types: ['seconds', 'second', 'secs', 'sec', 's'], logic: n * s },
-		{ types: ['milliseconds', 'millisecond', 'msecs', 'msec', 'ms'], logic: n }
-	];
-
-	return availableTypes.find(element => element.types.includes(type) || undefined).logic;
+  	const parse_arrays = match.map((q, n, p) => regex.exec(p)).map((array) => array.splice(1))//.map((v, x, y) => y[x][0] = v);
+	let n = 0;
+	parse_arrays.forEach((value) => {
+		const type = (value[1] || 'ms').toLowerCase();
+		if (['years', 'year', 'yrs', 'yr', 'y'].includes(type)) n += value[0] * y;
+		if (['months', 'month', 'mths', 'mth'].includes(type)) n += value[0] * mth;
+		if (['weeks', 'week', 'w'].includes(type)) n += value[0] * w;
+		if (['days', 'day', 'd'].includes(type)) n += value[0] * d;
+		if (['hours', 'hour', 'hrs', 'hr', 'h'].includes(type)) n += value[0] * h;
+		if (['minutes', 'minute', 'mins', 'min', 'm'].includes(type)) n += value[0] * m;
+		if (['seconds', 'second', 'secs', 'sec', 's'].includes(type)) n += value[0] * s;
+		if (['milliseconds', 'millisecond', 'msecs', 'msec', 'ms'].includes(type)) n += value[0];
+	});
+	return n;
 }
 
 /**
@@ -82,6 +93,12 @@ function parse(str) {
 
 function fmtShort(ms) {
 	const msAbs = Math.abs(ms);
+	if (msAbs >= mth) {
+		return Math.round(ms / mth) + 'mth';
+    }
+  	if (msAbs >= w) {
+		return Math.round(ms / w) + 'w';
+    }
 	if (msAbs >= d) {
 		return Math.round(ms / d) + 'd';
 	}
@@ -107,6 +124,12 @@ function fmtShort(ms) {
 
 function fmtLong(ms) {
 	const msAbs = Math.abs(ms);
+	if (msAbs >= mth) {
+		return plural(ms, msAbs, mth, 'month');
+    }
+  	if (msAbs >= w) {
+		return plural(ms, msAbs, w, 'week');
+    }
 	if (msAbs >= d) {
 		return plural(ms, msAbs, d, 'day');
 	}
