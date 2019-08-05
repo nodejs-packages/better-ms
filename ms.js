@@ -2,16 +2,7 @@
  * Helpers.
  */
 
-const leapyear = (year) => {
-	if (year % 4 === 0) {
-		if ((year % 100 === 0) && (year % 400 !== 0)) {
-			return 0;
-		} else {
-			return 1;
-		}
-	}
-	return 0;
-}
+const leap_year = (year) => ((!(year % 4) && !!(year % 100)) || !(year % 400)) ? 366 : 365;
 
 const now = new Date();
 const s = 1000;
