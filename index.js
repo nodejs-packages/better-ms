@@ -1,6 +1,6 @@
 module.exports = {
 	ms: require('./ms'),
-	getMilliseconds: require('./parse-ms'),
+	getMilliseconds: require('./ms'),
 	parseMilliseconds: require('./parse-ms'),
 	parseMs: require('./parse-ms'),
 	humanized: require('./pretty-ms'),
