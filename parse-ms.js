@@ -5,15 +5,13 @@ module.exports = (milliseconds) => {
 		throw new TypeError('Expected a number');
 	}
 	
-	const { Duration } = require('.');
-	const ms_date = new Duration(`${milliseconds}ms`).fromNow// - Date.now();
+	//const { Duration } = require('.');
+	//const ms_date = new Duration(`${milliseconds}ms`).fromNow// - Date.now();
 	
-	//const ms_date = new Date(milliseconds + Date.now());
-	const ms_year = ms_date.getFullYear();
-	const days_in_month = new Date(ms_year, ms_date.getMonth()+1, 0).getDate();
-	const weeks_in_month = days_in_month / 7;
-	const days_in_year = leap_year(ms_year);
-	//milliseconds = Date.now() - milliseconds;
+	//const ms_year = ms_date.getFullYear();
+	//const days_in_month = new Date(ms_year, ms_date.getMonth()+1, 0).getDate();
+	//const weeks_in_month = days_in_month / 7;
+	//const days_in_year = leap_year(ms_year);
 
 	const roundTowardsZero = milliseconds > 0 ? Math.floor : Math.ceil;
 	return {
@@ -29,13 +27,3 @@ module.exports = (milliseconds) => {
 		nanoseconds: roundTowardsZero(milliseconds * 1e6) % 1000
 	};
 };
-
-/*
-days: roundTowardsZero(milliseconds / 86400000),
-		hours: roundTowardsZero(milliseconds / 3600000) % 24,
-		minutes: roundTowardsZero(milliseconds / 60000) % 60,
-		seconds: roundTowardsZero(milliseconds / 1000) % 60,
-		milliseconds: roundTowardsZero(milliseconds) % 1000,
-		microseconds: roundTowardsZero(milliseconds * 1000) % 1000,
-		nanoseconds: roundTowardsZero(milliseconds * 1e6) % 1000
-		*/
