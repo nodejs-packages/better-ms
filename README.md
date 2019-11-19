@@ -55,7 +55,7 @@ humanize((future_date / 1) - Date.now()); // 3h5m
 ## Features
 
 - Works both in [Node.js](https://nodejs.org) and in the browser
-- Unline `ms` this package can parse multiple values `4d4m5s`
+- Unlike `ms` this package can parse multiple values `4d4m5s`
 
 ## Information
 This package was created from `ms` and `pretty-ms`, it just includes modified scripts and is combined into a single class.
