@@ -1,10 +1,12 @@
 module.exports = {
-	ms: require('./ms'),
-	parseMilliseconds: require('./parse-ms'),
-	parseMs: require('./parse-ms'),
-	humanize: require('./pretty-ms'),
-	humanise: require('./pretty-ms'),
-	prettyMilliseconds: require('./pretty-ms'),
-	prettyMs: require('./pretty-ms'),
-	Duration: require('./Duration')
+	ms: require('ms.js'),
+	getMilliseconds: require('parse-ms.js'),
+	parseMilliseconds: require('parse-ms.js'),
+	parseMs: require('parse-ms.js'),
+	humanized: require('pretty-ms.js'),
+	humanize: require('pretty-ms.js'),
+	humanise: require('pretty-ms.js'),
+	prettyMilliseconds: require('pretty-ms.js'),
+	prettyMs: require('pretty-ms.js'),
+	Duration: require('Duration.js')
 }
