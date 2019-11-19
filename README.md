@@ -1,11 +1,10 @@
+
 # better-ms
 
 # Usage
-
 Use this package to easily convert various time formats to milliseconds and milliseconds to time formats.
 
 ## Examples
-
 ```js
 Duration.getMilliseconds('2 days')  // 172800000
 Duration.getMilliseconds('1d')      // 86400000
@@ -19,7 +18,6 @@ Duration.getMilliseconds('2d4m10s') // 173050000
 ```
 
 ### Convert from Milliseconds
-
 ```js
 Duration.humanize(60000)       // "1m"
 Duration.humanize(2 * 60000)   // "2m"
@@ -28,7 +26,6 @@ Duration.humanize('10 hours')  // "10h"
 ```
 
 ### Time Format Written-Out
-
 ```js
 Duration.humanize(60000, { long: true })             // "1 minute"
 Duration.humanize(2 * 60000, { long: true })         // "2 minutes"
@@ -53,9 +50,12 @@ humanize((future_date / 1) - Date.now()); // 3h5m
 ```
 
 ## Features
-
 - Works both in [Node.js](https://nodejs.org) and in the browser
 - Unlike `ms` this package can parse multiple values `4d4m5s`
 
 ## Information
 This package was created from `ms` and `pretty-ms`, it just includes modified scripts and is combined into a single class.
+
+## Changelog
+#### 1.1.0
+- Added support for months and weeks.
