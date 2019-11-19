@@ -3,6 +3,9 @@
   "version": "1.0.5",
   "description": "Tiny millisecond conversion utility",
   "main": "./index",
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/nodejs-packages/better-ms.git"
