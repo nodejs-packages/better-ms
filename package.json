@@ -1,6 +1,6 @@
 {
   "name": "better-ms",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "Tiny millisecond conversion utility",
   "main": "./index",
   "repository": {
@@ -8,11 +8,12 @@
     "url": "https://github.com/nodejs-packages/better-ms.git"
   },
   "files": [
+    "Duration.js",
     "index.js",
     "ms.js",
     "parse-ms.js",
-    "Duration.js",
-    "pretty-ms.js"
+    "pretty-ms.js",
+    "Timestamp.js"
   ],
   "scripts": {
     "precommit": "lint-staged",
