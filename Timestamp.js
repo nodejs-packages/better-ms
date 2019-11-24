@@ -69,6 +69,8 @@ const TIME = {
 
 TIME.CRON.tokensRegex = new RegExp(Object.keys(TIME.CRON.tokens).join('|'), 'g');
 
+const { SECOND, MINUTE, DAY, DAYS, MONTHS, TIMESTAMP: { TOKENS } } = TIME;
+
 /* eslint-disable max-len */
 const tokens = new Map([
 	// Dates
