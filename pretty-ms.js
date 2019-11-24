@@ -42,7 +42,7 @@ module.exports = (milliseconds, options = {}) => {
   	add(parsed.years, 'year', 'y');
 	//add(Math.trunc(parsed.days / 365), 'year', 'y');
   	add(parsed.months % 12, 'month', 'mth'); // new
-  	add(parsed.days % weeks_in_month, 'week', 'w');
+  	add(parsed.weeks % weeks_in_month, 'week', 'w');
 	add(parsed.days % 7/*365*/, 'day', 'd'); //parsed.days % 365 // Math.trunc(parsed.days / month)
 	add(parsed.hours % 60, 'hour', 'h');
 	add(parsed.minutes % 60, 'minute', 'm');
