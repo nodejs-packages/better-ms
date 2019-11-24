@@ -8,5 +8,6 @@ module.exports = {
 	humanise: require('./pretty-ms'),
 	prettyMilliseconds: require('./pretty-ms'),
 	prettyMs: require('./pretty-ms'),
-	Duration: require('./Duration')
+	Duration: require('./Duration'),
+	Timestamp: require('./Timestamp')
 }
