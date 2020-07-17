@@ -1,9 +1,9 @@
+/* Version 2.1.2 */
+
 /**
  * Helpers.
  */
-
 const leap_year = (year) => ((!(year % 4) && !!(year % 100)) || !(year % 400)) ? 366 : 365;
-
 const now = new Date();
 const s = 1000;
 const m = s * 60;
@@ -15,7 +15,6 @@ const days_in_month = new Date(now.getFullYear(), now.getMonth()+1, 0).getDate()
 const weeks_in_month = days_in_month / 7;
 const mth = w * weeks_in_month;
 const y = mth * 12; //.25 // d * 365
-
 /**
  * Parse or format the given `val`.
  *
@@ -29,7 +28,6 @@ const y = mth * 12; //.25 // d * 365
  * @return {String|Number}
  * @api public
  */
-
 module.exports = function(val, options) {
 	options = options || {};
 	var type = typeof val;
@@ -40,7 +38,6 @@ module.exports = function(val, options) {
 	}
 	throw new Error('val is not a non-empty string or a valid number. val=' + JSON.stringify(val));
 };
-
 /**
  * Parse the given `str` and return milliseconds.
  *
@@ -48,7 +45,6 @@ module.exports = function(val, options) {
  * @return {Number}
  * @api private
  */
-
 function parse(str) {
 	str = String(str);
 	if (str.length > 100) {
@@ -74,7 +70,6 @@ function parse(str) {
 	});
 	return n;
 }
-
 /**
  * Short format for `ms`.
  *
@@ -82,7 +77,6 @@ function parse(str) {
  * @return {String}
  * @api private
  */
-
 function fmtShort(ms) {
 	const msAbs = Math.abs(ms);
 	if (msAbs >= y) {
@@ -108,7 +102,6 @@ function fmtShort(ms) {
 	}
 	return ms + 'ms';
 }
-
 /**
  * Long format for `ms`.
  *
@@ -116,7 +109,6 @@ function fmtShort(ms) {
  * @return {String}
  * @api private
  */
-
 function fmtLong(ms) {
 	const msAbs = Math.abs(ms);
 	if (msAbs >= y) {
@@ -142,11 +134,9 @@ function fmtLong(ms) {
 	}
 	return ms + ' ms';
 }
-
 /**
  * Pluralization helper.
  */
-
 function plural(ms, msAbs, n, name) {
 	const isPlural = msAbs >= n * 1.5;
 	return Math.round(ms / n) + ' ' + name + (isPlural ? 's' : '');
