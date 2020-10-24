@@ -1,6 +1,6 @@
 'use strict';
 
-/* Version 7.0.0 */
+/* Version 7.0.1 */
 
 const parseMilliseconds = require('./parse-ms');
 
@@ -67,7 +67,11 @@ module.exports = (milliseconds, options = {}) => {
 	add(parsed.hours % 60, 'hour', 'h');
 	add(parsed.minutes % 60, 'minute', 'm');
 
-	if (options.separateMilliseconds || options.formatSubMilliseconds || milliseconds < 1000) {
+	if (
+		options.separateMilliseconds
+		|| options.formatSubMilliseconds
+		|| (!options.colonNotation && milliseconds < 1000)
+	) {
 		add(parsed.seconds, 'second', 's');
 		if (options.formatSubMilliseconds) {
 			add(parsed.milliseconds, 'millisecond', 'ms');
